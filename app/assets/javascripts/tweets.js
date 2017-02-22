@@ -10,14 +10,19 @@ $(function() {
       method: 'POST',
       url: '/tweets',
       data: $(this).serialize(),
-      dataType: 'html',
+      dataType: 'json',
     }).done(function(responseData) {
       console.log('successfully completed');
-      $(responseData).prependTo($('.tweets'));
+      var listElement = $('<li>', {
+      html: '<p>' + responseData.message + '</p> <time>' + moment(responseData.created_at).format("MMM D, h:mm A") + '</time>',
+      class: "tweet"
+      });
+      $('.tweets').prepend(listElement);
     }).fail(function(responseData){
       console.log('failed');
     }).always(function(responseData) {
-      console.log('this should always be logged back')
+      console.log('this should always be logged back');
+      $('#create-tweet').removeAttr('disabled'); //remove the disable attribute after the ajax call so that you can submit again.
     })
     })
   })

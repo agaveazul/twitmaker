@@ -10,6 +10,7 @@ class TweetsController < ApplicationController
     respond_to do |format|
       @tweet.save
       format.html { render html: "<li class='tweet'><p>#{@tweet.message}</p><time>#{@tweet.created_at.strftime('%b %e, %l:%M %p')}</time><li>".html_safe }
+      format.json { render json: @tweet }
     end
 
     # if @tweet.save
